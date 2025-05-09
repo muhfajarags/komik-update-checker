@@ -8,7 +8,459 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234a69bd'><path d='M21 4H3a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 13a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v10z'/><path d='M12 7.5v9M9 12h6'/></svg>" type="image/svg+xml">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+    --primary: #4a69bd;
+    --primary-dark: #1e3799;
+    --accent: #6ab04c;
+    --accent-dark: #4a8835;
+    --bg-light: #f8f9fa;
+    --text-muted: #6c757d;
+}
+
+body {
+    background-color: #f5f5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    padding: 2.5rem 0;
+    margin-bottom: 2rem;
+    border-radius: 0 0 30px 30px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    position: relative;
+    overflow: hidden;
+}
+
+.header:before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(rgba(255, 255, 255, 0.1), transparent);
+    opacity: 0.5;
+    animation: pulse-header 15s infinite;
+}
+
+@keyframes pulse-header {
+    0% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.3; }
+    100% { transform: scale(1); opacity: 0.5; }
+}
+
+.header h1 {
+    font-weight: 700;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.header .lead {
+    font-weight: 300;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: 100%;
+    margin-bottom: 1.5rem;
+    border: none;
+    background: white;
+    position: relative;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+}
+
+.card:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(to right, var(--primary), var(--accent));
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition: transform 0.5s;
+}
+
+.card:hover:after {
+    transform: scaleX(1);
+}
+
+.card-img-top-container {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    background-color: #eee;
+}
+
+.card-img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 70%, rgba(0, 0, 0, 0.8));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover .card-img-overlay {
+    opacity: 1;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 0.8s ease;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+.card-footer {
+    background-color: var(--bg-light);
+    border-top: 1px solid #eee;
+    padding: 1rem;
+}
+
+.badge-update {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    z-index: 10;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    animation: pulse-badge 2s infinite;
+}
+
+@keyframes pulse-badge {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.btn-check {
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    padding: 0.5rem 1.2rem;
+    font-weight: 500;
+}
+
+.btn-check:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-check:active {
+    transform: translateY(0);
+}
+
+.btn-add {
+    background-color: var(--accent);
+    color: white;
+    border: none;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1.2rem;
+    font-weight: 500;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-add:hover {
+    background-color: var(--accent-dark);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-add:active {
+    transform: translateY(0);
+}
+
+.btn-outline-primary, .btn-outline-success {
+    transition: all 0.3s ease;
+}
+
+.btn-outline-primary:hover, .btn-outline-success:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.timestamp {
+    font-style: italic;
+    color: var(--text-muted);
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    border-left: 4px solid var(--primary);
+}
+
+.timestamp:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+#updateAlert {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    min-width: 300px;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    border-left: 5px solid #28a745;
+    animation: slideInRight 0.5s forwards;
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.manga-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    height: 3.6em;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin-bottom: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+.card:hover .manga-title {
+    color: var(--primary);
+}
+
+.nav-tabs {
+    border-bottom: 2px solid #e9ecef;
+    margin-bottom: 1.5rem;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    padding: 0.75rem 1.25rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-tabs .nav-link:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(to right, var(--primary), var(--accent));
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-tabs .nav-link.active {
+    color: var(--primary);
+    background-color: transparent;
+    border: none;
+}
+
+.nav-tabs .nav-link.active:after {
+    width: 80%;
+}
+
+.nav-tabs .nav-link:hover:not(.active):after {
+    width: 40%;
+}
+
+.tab-content {
+    padding-top: 2rem;
+}
+
+#updateTab .card {
+    border-left: 5px solid #28a745;
+}
+
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+}
+
+.loader {
+    width: 60px;
+    height: 60px;
+    border: 5px solid rgba(74, 105, 189, 0.2);
+    border-top: 5px solid var(--primary);
+    border-radius: 50%;
+    animation: spin 1.5s linear infinite;
+    margin-bottom: 1rem;
+}
+
+.initial-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    flex-direction: column;
+}
+
+.initial-loader .loader {
+    width: 80px;
+    height: 80px;
+}
+
+.loader-text {
+    margin-top: 1rem;
+    font-weight: 500;
+    color: var(--primary);
+    letter-spacing: 0.5px;
+}
+
+.loader-progress {
+    width: 200px;
+    height: 5px;
+    background-color: #e9ecef;
+    border-radius: 5px;
+    margin-top: 1rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.loader-progress-bar {
+    height: 100%;
+    background: linear-gradient(to right, var(--primary), var(--accent));
+    width: 0;
+    border-radius: 5px;
+    transition: width 0.3s ease;
+    animation: progressAnimation 2s ease-in-out infinite;
+}
+
+@keyframes progressAnimation {
+    0% { width: 0; }
+    50% { width: 100%; }
+    100% { width: 0; }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#noUpdates {
+    padding: 3rem 0;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+#noUpdates i {
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+}
+
+#noUpdates h4 {
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+.fade-in {
+    animation: fadeIn 0.8s forwards;
+}
+
+.slide-up {
+    animation: slideUp 0.5s forwards;
+}
+
+.bounce-in {
+    animation: bounceIn 0.8s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes bounceIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-content {
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    padding: 1.5rem;
+}
+
+.modal-title {
+    font-weight: 600;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+.modal-footer {
+    border-top: 1px solid #eee;
+    padding: 1rem 2rem;
+}
+
+@media (max-width: 768px) {
+    .header {
+        padding: 2rem 0;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .card-img-top-container,
+    .card-img-top {
+        height: 350px;
+    }
+
+    .modal-body {
+        padding: 1.5rem;
+    }
+}
+    </style>
 </head>
 <body>
     <div class="initial-loader" id="initialLoader">
@@ -115,6 +567,352 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+        document.getElementById('initialLoader').style.opacity = '0';
+        setTimeout(function () {
+            document.getElementById('initialLoader').style.display = 'none';
+        }, 500);
+    }, 2000);
+
+    fetchLastScan();
+
+    document.getElementById('checkBtn').addEventListener('click', checkUpdates);
+    document.getElementById('addMangaBtn').addEventListener('click', addNewManga);
+
+    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+
+    document.querySelectorAll('.nav-link').forEach(tab => {
+        tab.addEventListener('shown.bs.tab', function (e) {
+            const targetId = e.target.getAttribute('data-bs-target');
+            const targetPane = document.querySelector(targetId);
+            targetPane.classList.remove('slide-up');
+            void targetPane.offsetWidth;
+            targetPane.classList.add('slide-up');
+        });
+    });
+});
+
+function fetchLastScan() {
+    const mangaList = document.getElementById('mangaList');
+    mangaList.innerHTML = createLoadingCardsSkeleton();
+
+    fetch('/get_last_scan')
+        .then(response => response.json())
+        .then(data => {
+            if (data.timestamp) {
+                updateUI(data);
+            } else {
+                mangaList.innerHTML = `
+                    <div class="col-12 text-center py-5">
+                        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                        <h4>Belum Ada Data Komik</h4>
+                        <p>Klik tombol "Periksa Update" untuk memindai komik.</p>
+                    </div>
+                `;
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching last scan:', error);
+            mangaList.innerHTML = `
+                <div class="col-12 text-center py-5">
+                    <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
+                    <h4>Terjadi Kesalahan</h4>
+                    <p>Gagal memuat data. Silakan coba lagi.</p>
+                </div>
+            `;
+        });
+}
+
+function createLoadingCardsSkeleton() {
+    let skeletonHtml = '';
+    for (let i = 0; i < 6; i++) {
+        skeletonHtml += `
+            <div class="col">
+                <div class="card h-100" aria-hidden="true">
+                    <div class="card-img-top-container">
+                        <div class="placeholder-glow" style="height:100%; background:#eee;"></div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="manga-title placeholder-glow">
+                            <span class="placeholder col-7"></span>
+                            <span class="placeholder col-4"></span>
+                        </h5>
+                        <p class="card-text placeholder-glow">
+                            <span class="placeholder col-6"></span>
+                        </p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <span class="placeholder btn btn-sm btn-outline-primary disabled col-5"></span>
+                        <span class="placeholder btn btn-sm btn-outline-success disabled col-5"></span>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+    return skeletonHtml;
+}
+
+function checkUpdates() {
+    const checkBtn = document.getElementById('checkBtn');
+    const loading = document.getElementById('loading');
+    const mangaList = document.getElementById('mangaList');
+
+    checkBtn.disabled = true;
+    checkBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Memeriksa...';
+    loading.classList.remove('d-none');
+    mangaList.innerHTML = createLoadingCardsSkeleton();
+
+    fetch('/check_updates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                setTimeout(() => {
+                    updateUI(data);
+                    if (data.updates.length > 0) {
+                        showUpdateAlert(data.updates.length);
+                    }
+                }, 1000);
+            } else {
+                console.error('Error checking updates:', data.error);
+                showErrorAlert('Terjadi kesalahan saat memeriksa pembaruan: ' + data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showErrorAlert('Terjadi kesalahan: ' + error);
+        })
+        .finally(() => {
+            setTimeout(() => {
+                checkBtn.disabled = false;
+                checkBtn.innerHTML = '<i class="fas fa-sync-alt me-2"></i>Periksa Update';
+                loading.classList.add('d-none');
+            }, 1000);
+        });
+}
+
+function showErrorAlert(message) {
+    const alert = document.createElement('div');
+    alert.className = 'alert alert-danger alert-dismissible fade show';
+    alert.setAttribute('role', 'alert');
+    alert.innerHTML = `
+        <strong><i class="fas fa-exclamation-triangle me-2"></i>Error!</strong>
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+    document.querySelector('.container').prepend(alert);
+    setTimeout(() => {
+        alert.classList.remove('show');
+        setTimeout(() => alert.remove(), 300);
+    }, 5000);
+}
+
+function addNewManga() {
+    const urlInput = document.getElementById('mangaUrl');
+    const url = urlInput.value.trim();
+    const addMangaBtn = document.getElementById('addMangaBtn');
+
+    if (!url) {
+        alert('Silakan masukkan URL komik');
+        return;
+    }
+
+    if (!url.startsWith('https://komiku.id/manga/')) {
+        alert('URL harus dari komiku.id/manga/');
+        return;
+    }
+
+    addMangaBtn.disabled = true;
+    addMangaBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Menambahkan...';
+
+    fetch('/add_manga', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: url })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const successAlert = document.createElement('div');
+                successAlert.className = 'alert alert-success alert-dismissible fade show';
+                successAlert.setAttribute('role', 'alert');
+                successAlert.innerHTML = `
+                    <strong><i class="fas fa-check-circle me-2"></i>Berhasil!</strong>
+                    Komik berhasil ditambahkan ke daftar pantauan.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                document.querySelector('.container').prepend(successAlert);
+                setTimeout(() => {
+                    successAlert.classList.remove('show');
+                    setTimeout(() => successAlert.remove(), 300);
+                }, 3000);
+                urlInput.value = '';
+                const addModal = bootstrap.Modal.getInstance(document.getElementById('addModal'));
+                addModal.hide();
+                setTimeout(() => {
+                    checkUpdates();
+                }, 500);
+            } else {
+                showErrorAlert('Gagal menambahkan komik atau komik sudah ada dalam daftar.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            showErrorAlert('Terjadi kesalahan: ' + error);
+        })
+        .finally(() => {
+            addMangaBtn.disabled = false;
+            addMangaBtn.innerHTML = '<i class="fas fa-plus me-1"></i>Tambahkan';
+        });
+}
+
+function updateUI(data) {
+    const timestampInfo = document.getElementById('timestampInfo');
+    if (data.timestamp) {
+        timestampInfo.classList.add('animate__animated', 'animate__fadeIn');
+        timestampInfo.innerHTML = `<i class="fas fa-clock me-2"></i>Pemindaian terakhir: ${data.timestamp}`;
+        setTimeout(() => {
+            timestampInfo.classList.remove('animate__animated', 'animate__fadeIn');
+        }, 1000);
+    }
+
+    const mangaList = document.getElementById('mangaList');
+    const updateList = document.getElementById('updateList');
+    const noUpdates = document.getElementById('noUpdates');
+    const updateCount = document.getElementById('updateCount');
+
+    mangaList.innerHTML = '';
+    updateList.innerHTML = '';
+
+    updateCount.textContent = data.updates.length;
+    if (data.updates.length > 0) {
+        updateCount.classList.add('animate__animated', 'animate__heartBeat');
+        setTimeout(() => {
+            updateCount.classList.remove('animate__animated', 'animate__heartBeat');
+        }, 1000);
+    }
+
+    noUpdates.classList.toggle('d-none', data.updates.length > 0);
+
+    if (data.all_manga.length === 0) {
+        mangaList.innerHTML = `
+            <div class="col-12 text-center py-5 fade-in">
+                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                <h4>Tidak Ada Komik</h4>
+                <p>Tambahkan komik menggunakan tombol "Tambah Komik".</p>
+            </div>
+        `;
+    } else {
+        data.all_manga.forEach((manga, index) => {
+            const hasUpdate = data.updates.some(update => update.title === manga.title);
+            const card = document.createElement('div');
+            card.className = 'col';
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            let coverImg = manga.cover || '/static/default_cover.png';
+            card.innerHTML = `
+                <div class="card h-100">
+                    ${hasUpdate ? `<span class="badge bg-danger badge-update">+${data.updates.find(u => u.title === manga.title).new_chapters} Chapter Baru</span>` : ''}
+                    <div class="card-img-top-container">
+                        <img src="${coverImg}" class="card-img-top" alt="${manga.title}" onerror="this.src='/static/default_cover.png';">
+                        <div class="card-img-overlay"></div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="manga-title">${manga.title}</h5>
+                        <p class="card-text"><i class="fas fa-layer-group me-2"></i>Chapter Terbaru: <span class="fw-bold">${manga.latest_chapter}</span></p>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="${manga.manga_url}" class="btn btn-sm btn-outline-primary" target="_blank"><i class="fas fa-info-circle me-1"></i>Detail</a>
+                        <a href="${manga.chapter_url}" class="btn btn-sm btn-outline-success" target="_blank"><i class="fas fa-book-reader me-1"></i>Baca Terbaru</a>
+                    </div>
+                </div>
+            `;
+            mangaList.appendChild(card);
+            setTimeout(() => {
+                card.style.transition = 'all 0.5s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 100 * index);
+
+            if (hasUpdate) {
+                const updateData = data.updates.find(u => u.title === manga.title);
+                const updateCard = document.createElement('div');
+                updateCard.className = 'col';
+                updateCard.style.opacity = '0';
+                updateCard.style.transform = 'translateY(20px)';
+                updateCard.innerHTML = `
+                    <div class="card h-100">
+                        <span class="badge bg-danger badge-update">+${updateData.new_chapters} Chapter Baru</span>
+                        <div class="card-img-top-container">
+                            <img src="${coverImg}" class="card-img-top" alt="${manga.title}" onerror="this.src='/static/default_cover.png';">
+                            <div class="card-img-overlay"></div>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="manga-title">${manga.title}</h5>
+                            <p class="card-text"><i class="fas fa-layer-group me-2"></i>Chapter Terbaru: <span class="fw-bold">${manga.latest_chapter}</span></p>
+                            <p class="card-text small text-muted">Tertinggal sejak Chapter ${updateData.last_read_chapter}</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between">
+                            <a href="${manga.manga_url}" class="btn btn-sm btn-outline-primary" target="_blank"><i class="fas fa-info-circle me-1"></i>Detail</a>
+                            <a href="javascript:void(0)" class="btn btn-sm btn-outline-success" onclick="markAsRead('${manga.title}', ${updateData.first_unread_chapter}, '${updateData.unread_chapter_url}')"><i class="fas fa-book-reader me-1"></i>Lanjutkan Membaca</a>
+                        </div>
+                    </div>
+                `;
+                updateList.appendChild(updateCard);
+                setTimeout(() => {
+                    updateCard.style.transition = 'all 0.5s ease';
+                    updateCard.style.opacity = '1';
+                    updateCard.style.transform = 'translateY(0)';
+                }, 100 * index);
+            }
+        });
+    }
+}
+
+function showUpdateAlert(count) {
+    const updateAlert = document.getElementById('updateAlert');
+    const updateAlertMessage = document.getElementById('updateAlertMessage');
+    updateAlertMessage.textContent = ` Ditemukan ${count} komik yang memiliki chapter baru!`;
+    updateAlert.classList.add('show', 'animate__animated', 'animate__shakeX');
+    setTimeout(() => {
+        updateAlert.classList.remove('animate__animated', 'animate__shakeX');
+    }, 1000);
+    setTimeout(() => {
+        updateAlert.classList.remove('show');
+        setTimeout(() => {
+            updateAlert.classList.remove('animate__animated');
+        }, 300);
+    }, 5000);
+}
+
+function markAsRead(title, chapter, link) {
+    fetch('/mark_as_read', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: title, chapter: chapter })
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log(`Berhasil menandai "${title}" sebagai dibaca hingga chapter ${chapter}`);
+            } else {
+                console.error('Error marking as read:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+
+    window.open(link, '_blank');
+}
+
+    </script>
 </body>
 </html>
